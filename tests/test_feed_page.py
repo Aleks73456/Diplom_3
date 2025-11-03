@@ -1,0 +1,55 @@
+from selenium import webdriver
+from pages.feed_page import FeedPage
+import helpers
+import allure
+from helpers import BASE_URL
+
+class TestFeedPages:
+    
+    @staticmethod
+    def getwebdriver(browserName):
+       if browserName == "firefox":
+           return webdriver.Firefox()
+       elif browserName == "chrome":
+           return webdriver.Chrome()
+       
+
+    @classmethod
+    def setup_class(cls):
+        cls.driver = cls.getwebdriver("firefox")
+    
+    @allure.title('Проверка ленты заказов')
+    def test_feed_page(self):
+        self.driver.get(f'{BASE_URL}/login')
+        user = helpers.regist_user_for_login_and_get_token()
+        helpers.login(self.driver, user["email"], user["password"])
+        feed_page = FeedPage(self.driver)
+        feed_page.click_button_feed()
+        feed_page.click_button_feed_order()
+        order_details = feed_page.check_modal_order()
+        assert order_details.is_displayed()
+        feed_page.click_button_close_order_in_history()
+        all_time_before_order = feed_page.check_order_feed_number_all_time().text
+        today_before_order = feed_page.check_order_feed_number_today().text
+        helpers.order(self.driver)
+        helpers.profile_page(self.driver)
+        order_number_in_history_text = feed_page.check_order_in_history().text
+        feed_page.click_button_feed()
+        order_number_in_feed_order_text = feed_page.check_number_feed_order().text
+        assert order_number_in_feed_order_text == order_number_in_history_text
+        order_number_in_ready_text = feed_page.check_order_list_ready().text
+        order_number_clear_feed_order_text = order_number_in_feed_order_text.replace("#", "")
+        assert order_number_in_ready_text == order_number_clear_feed_order_text
+        all_time_after_order = feed_page.check_order_feed_number_all_time().text
+        today_after_order = feed_page.check_order_feed_number_today().text
+        assert int(all_time_before_order) < int(all_time_after_order)
+        assert int(today_before_order)  < int(today_after_order)
+        helpers.delete_user(user["accessToken"])
+        
+
+    @classmethod
+    def teardown_class(cls):
+        cls.driver.quit() 
+
+
+

@@ -1,0 +1,58 @@
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+import time
+import allure
+
+class ProfilePage:
+    button_profile = (By.XPATH, "//div/header/nav/a/p[text()='Личный Кабинет']")
+    button_history_profile = (By.XPATH, "//div/main/div/nav/ul/li[2]/a[text()='История заказов']")
+    button_exit = (By.XPATH, "//div/main/div/nav/ul/li[3]/button[text()='Выход']")
+    auth_form = (By.CSS_SELECTOR, "form.Auth_form__3qKeq.mb-20")
+    email_field = (By.XPATH, "//div/main/div/form/fieldset[1]/div/div/input")
+    password_field = (By.XPATH, "//div/main/div/form/fieldset[2]/div/div/input")
+    button_login = (By.XPATH, "//div/main/div/form/button[text()='Войти']")
+
+    def __init__(self, driver):
+        self.driver = driver
+    
+    @allure.step('вводим email')
+    def click_email_field(self,email):
+        self.driver.find_element(*self.email_field).send_keys(email)
+    
+    @allure.step('вводим пароль')
+    def click_password_field(self,password):
+        self.driver.find_element(*self.password_field).send_keys(password)
+
+    @allure.step('нажимаем "войти"')
+    def click_button_login(self):
+        self.driver.find_element(*self.button_login).click()
+    
+    @allure.step('входим в профиль')
+    def click_button_profile(self):
+        time.sleep(3)
+        WebDriverWait(self.driver, 5).until(
+        expected_conditions.element_to_be_clickable(self.button_profile))
+        self.driver.find_element(*self.button_profile).click()
+    
+    @allure.step('открываем вкладку с историей заказов')
+    def click_button_history_profile(self):
+        WebDriverWait(self.driver, 5).until(
+        expected_conditions.element_to_be_clickable(self.button_history_profile))
+        time.sleep(3)
+        self.driver.find_element(*self.button_history_profile).click()
+    
+    @allure.step('выходим из аккаунта')
+    def click_button_exit(self):
+        WebDriverWait(self.driver, 5).until(
+        expected_conditions.element_to_be_clickable(self.button_exit))
+        self.driver.find_element(*self.button_exit).click()
+
+    @allure.step('возвращаем форму авторизации')
+    def check_auth_form(self):
+        WebDriverWait(self.driver, 5).until(
+        expected_conditions.visibility_of_element_located(self.auth_form))
+        return self.driver.find_element(*self.auth_form)
+    
+    
