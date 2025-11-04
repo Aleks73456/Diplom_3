@@ -1,9 +1,7 @@
-
 from selenium.webdriver.common.by import By
 import time
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
-import time
 import allure
 
 class FeedPage:

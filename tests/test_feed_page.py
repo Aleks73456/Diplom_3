@@ -6,24 +6,13 @@ from helpers import BASE_URL
 
 class TestFeedPages:
     
-    @staticmethod
-    def getwebdriver(browserName):
-       if browserName == "firefox":
-           return webdriver.Firefox()
-       elif browserName == "chrome":
-           return webdriver.Chrome()
-       
-
-    @classmethod
-    def setup_class(cls):
-        cls.driver = cls.getwebdriver("chrome")
     
     @allure.title('Проверка ленты заказов')
-    def test_feed_page(self):
-        self.driver.get(f'{BASE_URL}/login')
+    def test_feed_page(self,driver):
+        driver.get(f'{BASE_URL}/login')
         user = helpers.regist_user_for_login_and_get_token()
-        helpers.login(self.driver, user["email"], user["password"])
-        feed_page = FeedPage(self.driver)
+        helpers.login(driver, user["email"], user["password"])
+        feed_page = FeedPage(driver)
         feed_page.click_button_feed()
         feed_page.click_button_feed_order()
         order_details = feed_page.check_modal_order()
@@ -31,8 +20,8 @@ class TestFeedPages:
         feed_page.click_button_close_order_in_history()
         all_time_before_order = feed_page.check_order_feed_number_all_time().text
         today_before_order = feed_page.check_order_feed_number_today().text
-        helpers.order(self.driver)
-        helpers.profile_page(self.driver)
+        helpers.order(driver)
+        helpers.profile_page(driver)
         order_number_in_history_text = feed_page.check_order_in_history().text
         feed_page.click_button_feed()
         order_number_in_feed_order_text = feed_page.check_number_feed_order().text
@@ -50,9 +39,6 @@ class TestFeedPages:
         helpers.delete_user(user["accessToken"])
         
 
-    @classmethod
-    def teardown_class(cls):
-        cls.driver.quit() 
-
+    
 
 

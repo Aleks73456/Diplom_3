@@ -7,24 +7,13 @@ import allure
 class TestPasswordForgotPage:
 
 
-    @staticmethod
-    def getwebdriver(browserName):
-       if browserName == "firefox":
-           return webdriver.Firefox()
-       elif browserName == "chrome":
-           return webdriver.Chrome()
-       
-
-    @classmethod
-    def setup_class(cls):
-        cls.driver = cls.getwebdriver("chrome")
        
 
     
     @allure.title('Проверка восстановления пароля')
-    def test_password_forgot(self):
-        self.driver.get(f'{BASE_URL}/login')
-        password_forgot_page = PasswordForgotPage(self.driver)
+    def test_password_forgot(self,driver):
+        driver.get(f'{BASE_URL}/login')
+        password_forgot_page = PasswordForgotPage(driver)
         password_forgot_page.click_button_forgot_password()
         password_forgot_page.set_email_text('aser@mail.ru')
         password_forgot_page.click_button_type_primary()
@@ -35,6 +24,4 @@ class TestPasswordForgotPage:
         
 
 
-    classmethod
-    def teardown_class(cls):
-        cls.driver.quit()
+    
