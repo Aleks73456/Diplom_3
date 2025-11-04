@@ -44,7 +44,9 @@ class FeedPage:
     def check_order_in_history(self):
         WebDriverWait(self.driver, 10).until(
         expected_conditions.visibility_of_element_located(self.order_in_history))
-        return self.driver.find_element(*self.order_in_history)
+        result = self.driver.find_element(*self.order_in_history)
+        return result.text
+    
     
     @allure.step('закрываем модалку заказа в ленте заказов')
     def click_button_close_order_in_history(self):
@@ -56,22 +58,26 @@ class FeedPage:
     def check_order_feed_number_all_time(self):
         WebDriverWait(self.driver, 10).until(
         expected_conditions.visibility_of_element_located(self.order_feed_number_all_time))
-        return self.driver.find_element(*self.order_feed_number_all_time)
+        result = self.driver.find_element(*self.order_feed_number_all_time)
+        return result.text
     
     @allure.step('возвращаем количество заказов за сегодня')
     def check_order_feed_number_today(self):
         WebDriverWait(self.driver, 10).until(
         expected_conditions.visibility_of_element_located(self.order_feed_number_today))
-        return self.driver.find_element(*self.order_feed_number_today)
+        result = self.driver.find_element(*self.order_feed_number_today)
+        return result.text
     
     @allure.step('возвращаем номер заказа в работе')
     def check_order_list_ready(self):
         WebDriverWait(self.driver, 10).until(
         expected_conditions.visibility_of_element_located(self.order_list_ready))
-        return self.driver.find_element(*self.order_list_ready)
+        result = self.driver.find_element(*self.order_list_ready)
+        return result.text
 
     @allure.step('возвращаем номер заказа в ленте заказов')
     def check_number_feed_order(self):
         WebDriverWait(self.driver, 10).until(
         expected_conditions.visibility_of_element_located(self.number_feed_order))
-        return self.driver.find_element(*self.number_feed_order)
+        result = self.driver.find_element(*self.number_feed_order)
+        return result.text

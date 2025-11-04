@@ -95,7 +95,8 @@ class OrderPage:
     def check_counter_burger_ingredient(self):
         WebDriverWait(self.driver, 10).until(
         expected_conditions.visibility_of_element_located(self.counter_burger_ingredient))
-        return self.driver.find_element(*self.counter_burger_ingredient)
+        result = self.driver.find_element(*self.counter_burger_ingredient)
+        return result.text
     
     @allure.step('нажимаем на кнопку "Оформить заказ"')
     def click_button_order(self):
