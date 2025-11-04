@@ -16,7 +16,7 @@ class TestFeedPages:
 
     @classmethod
     def setup_class(cls):
-        cls.driver = cls.getwebdriver("firefox")
+        cls.driver = cls.getwebdriver("chrome")
     
     @allure.title('Проверка ленты заказов')
     def test_feed_page(self):
@@ -40,10 +40,13 @@ class TestFeedPages:
         order_number_in_ready_text = feed_page.check_order_list_ready().text
         order_number_clear_feed_order_text = order_number_in_feed_order_text.replace("#", "")
         assert order_number_in_ready_text == order_number_clear_feed_order_text
+        helpers.delete_user(user["accessToken"])
         all_time_after_order = feed_page.check_order_feed_number_all_time().text
         today_after_order = feed_page.check_order_feed_number_today().text
         assert int(all_time_before_order) < int(all_time_after_order)
         assert int(today_before_order)  < int(today_after_order)
+        order_number_clear_feed_order_text = order_number_in_feed_order_text.replace("#", "")
+        assert order_number_in_ready_text == order_number_clear_feed_order_text
         helpers.delete_user(user["accessToken"])
         
 

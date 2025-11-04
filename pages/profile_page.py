@@ -6,13 +6,13 @@ import time
 import allure
 
 class ProfilePage:
-    button_profile = (By.XPATH, "//div/header/nav/a/p[text()='Личный Кабинет']")
-    button_history_profile = (By.XPATH, "//div/main/div/nav/ul/li[2]/a[text()='История заказов']")
-    button_exit = (By.XPATH, "//div/main/div/nav/ul/li[3]/button[text()='Выход']")
+    button_profile = (By.XPATH, "//p[text()='Личный Кабинет']")
+    button_history_profile = (By.XPATH, ".//a[text()='История заказов']")
+    button_exit = (By.XPATH, "//button[text()='Выход']") 
     auth_form = (By.CSS_SELECTOR, "form.Auth_form__3qKeq.mb-20")
-    email_field = (By.XPATH, "//div/main/div/form/fieldset[1]/div/div/input")
-    password_field = (By.XPATH, "//div/main/div/form/fieldset[2]/div/div/input")
-    button_login = (By.XPATH, "//div/main/div/form/button[text()='Войти']")
+    email_field = (By.NAME, "name")
+    password_field = (By.NAME, "Пароль")
+    button_login = (By.XPATH, "//button[text()='Войти']")
 
     def __init__(self, driver):
         self.driver = driver

@@ -10,16 +10,15 @@ import allure
 
 
 class OrderPage:
-    button_constructor = (By.XPATH, "//div/header/nav/ul/li[1]/a/p[text()='Конструктор']")
-    button_order_feed = (By.XPATH, "//div/header/nav/ul/li[2]/a/p[text()='Лента Заказов']")
-    burger_ingredient = (By.XPATH, "//div/main/section[1]/div[2]/ul[1]/a[1]") 
-    burger_ingredient_two = (By.XPATH, "//*[@id='root']/div/main/section[1]/div[2]/ul[2]/a[1]")
-    button_close_modal_ingredient = (By.XPATH, "//div/section[1]/div[1]/button")
-    ingredients_bascet = (By.XPATH, "/html/body/div/div/main/section[2]")
-    counter_burger_ingredient = (By.XPATH, "//div/main/section[1]/div[2]/ul[1]/a[1]/div[1]/p[text()='2']")
-    button_order = (By.XPATH, "//div/main/section[2]/div/button[text()='Оформить заказ']")
-    modal_order = (By.XPATH, "//div/section/div[1]/div/p[text()='идентификатор заказа']")
-    close_modal_order = (By.XPATH, "//div/section/div[1]/button")
+    button_constructor = (By.XPATH, "//p[text()='Конструктор']")
+    button_order_feed = (By.XPATH, "//p[text()='Лента Заказов']")
+    burger_ingredient = (By.XPATH, "//a[@href='/ingredient/61c0c5a71d1f82001bdaaa6d']")  
+    button_close_modal_ingredient = (By.CLASS_NAME, "Modal_modal__close__TnseK")
+    ingredients_bascet = (By.CLASS_NAME, "BurgerConstructor_basket__29Cd7")
+    counter_burger_ingredient = (By.XPATH, "//p[text()='2']")
+    button_order = (By.XPATH, "//button[text()='Оформить заказ']")
+    modal_order = (By.XPATH, "//p[text()='идентификатор заказа']")
+    close_modal_order = (By.CLASS_NAME, "Modal_modal__close__TnseK")
 
     def __init__(self, driver):
         self.driver = driver
