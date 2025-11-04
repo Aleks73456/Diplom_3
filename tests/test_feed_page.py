@@ -1,8 +1,7 @@
-from selenium import webdriver
 from pages.feed_page import FeedPage
 import helpers
 import allure
-from helpers import BASE_URL
+
 
 class TestFeedPages:
     

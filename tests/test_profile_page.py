@@ -1,8 +1,5 @@
-from selenium import webdriver
 from pages.profile_page import ProfilePage
-import helpers
 import allure
-from helpers import BASE_URL
 
 
 class TestProfilePage:

@@ -1,8 +1,6 @@
-from selenium import webdriver
 from pages.orders_page import OrderPage
-import helpers
 import allure
-from helpers import BASE_URL
+
 
 
 

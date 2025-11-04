@@ -1,4 +1,3 @@
-from selenium import webdriver
 from pages.password_forgot_page import PasswordForgotPage
 from helpers import BASE_URL
 import allure
