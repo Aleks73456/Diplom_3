@@ -1,44 +1,40 @@
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions
 import time
 import allure
 import locators.orders_page_locators as loc
+from pages.base_page import BasePage
 
 
-class OrderPage:
+class OrderPage(BasePage):
 
-    def __init__(self, driver):
-        self.driver = driver
 
     @allure.step('переход по клику на «Лента заказов»')
     def click_button_order_feed(self):
         time.sleep(1)
-        WebDriverWait(self.driver, 10).until(
-        expected_conditions.visibility_of_element_located(loc.button_order_feed))
-        self.driver.find_element(*loc.button_order_feed).click()
+        self.click(loc.button_order_feed)
+        
     
     @allure.step('переход по клику на «Конструктор»')
     def click_button_constructor(self):
-        self.driver.find_element(*loc.button_constructor).click()
+        self.click(loc.button_constructor)
+    
     
     @allure.step('Кликаем на ингредиент в конструкторе')
     def click_burger_ingredient(self):
-        WebDriverWait(self.driver, 10).until(
-        expected_conditions.visibility_of_element_located(loc.burger_ingredient))
-        self.driver.find_element(*loc.burger_ingredient).click()
-    
+        self.click(loc.burger_ingredient)
+        
+        
     @allure.step('Закрываем модалку ингредиента')
     def click_button_close_modal_ingredient(self):
-        WebDriverWait(self.driver, 10).until(
-        expected_conditions.visibility_of_element_located(loc.button_close_modal_ingredient))
-        self.driver.find_element(*loc.button_close_modal_ingredient).click()
+        self.click(loc.button_close_modal_ingredient)
+        
+        
 
     # Здесь пришлось искать помощь в интернете для создания JS для drag-and-drop, 
     # так как ActionChains не работает корректно в Firefox. В Chrome такой проблемы нет.
     @allure.step('перемещаем ингредиент в корзину')
     def set_burger_ingredient_in_ingredients_bascet(self):
-        burger_ingredient = self.driver.find_element(*loc.burger_ingredient)
-        ingredients_basket = self.driver.find_element(*loc.ingredients_bascet)
+        burger_ingredient = self.wait_for_visibility(loc.burger_ingredient)
+        ingredients_basket = self.wait_for_visibility(loc.ingredients_bascet)
 
         self.driver.execute_script("""
         const src = arguments[0];
@@ -80,28 +76,23 @@ class OrderPage:
         
     @allure.step('получаем каунтер данного ингредиента')
     def check_counter_burger_ingredient(self):
-        WebDriverWait(self.driver, 10).until(
-        expected_conditions.visibility_of_element_located(loc.counter_burger_ingredient))
-        result = self.driver.find_element(*loc.counter_burger_ingredient)
-        return result.text
+        return self.get_text(loc.counter_burger_ingredient)
+        
     
     @allure.step('нажимаем на кнопку "Оформить заказ"')
     def click_button_order(self):
         time.sleep(1)
-        WebDriverWait(self.driver, 10).until(
-        expected_conditions.visibility_of_element_located(loc.button_order))
-        self.driver.find_element(*loc.button_order).click()
+        self.click(loc.button_order)
+        
 
     @allure.step('возвращаем модалку с деталями заказа"')
     def check_modal_order(self):
-        WebDriverWait(self.driver, 10).until(
-        expected_conditions.visibility_of_element_located(loc.modal_order))
-        return self.driver.find_element(*loc.modal_order)
+        return self.wait_for_visibility(loc.modal_order)
+    
     
     @allure.step('закрываем модалку с деталями заказа')
     def click_close_modal_order(self):
-        WebDriverWait(self.driver, 10).until(
-        expected_conditions.visibility_of_element_located(loc.close_modal_order))
-        self.driver.find_element(*loc.close_modal_order).click()
+        self.click(loc.close_modal_order)
+        
 
     

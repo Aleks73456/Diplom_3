@@ -1,42 +1,39 @@
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions
 import time
 import allure
 import locators.password_forgot_page_locators as loc
+from pages.base_page import BasePage
 
-class PasswordForgotPage:
+class PasswordForgotPage(BasePage):
 
-    def __init__(self, driver):
-        self.driver = driver
     
     @allure.step('нажимаем на кнопку "Восстановить пароль"')
     def click_button_forgot_password(self):
-        WebDriverWait(self.driver, 5).until(
-        expected_conditions.element_to_be_clickable(loc.button_forgot_password))
         time.sleep(3)
-        self.driver.find_element(*loc.button_forgot_password).click()
+        self.click(loc.button_forgot_password)
+        
 
     @allure.step('вводим email')
     def set_email_text(self,email):
-        WebDriverWait(self.driver, 5).until(
-        expected_conditions.element_to_be_clickable(loc.email_field))
-        self.driver.find_element(*loc.email_field).send_keys(email)
+        self.set_text(loc.email_field,email)
+        
     
     @allure.step('нажимаем на кнопку "Восстановить"')
     def click_button_type_primary(self):
-        self.driver.find_element(*loc.button_type_primary).click()
+        self.click(loc.button_type_primary)
+        
 
 
     @allure.step('вводим пароль')
     def set_password_field(self,password):
-        WebDriverWait(self.driver, 3).until(
-        expected_conditions.element_to_be_clickable(loc.password_field)) 
-        self.driver.find_element(*loc.password_field).send_keys(password)
+        self.set_text(loc.password_field,password)
+
    
     @allure.step('нажимаем на кнопку глаза')
     def click_button_eye(self):
-        self.driver.find_element(*loc.button_eye).click()
+        self.click(loc.button_eye)
+
 
     @allure.step('возвращаем поле ввода пароля после клика на глаз')
     def check_password_field_after_click_eye(self):
-        return self.driver.find_element(*loc.password_field_after_click_eye)
+        self.wait_for_visibility(loc.password_field_after_click_eye)
+ 
